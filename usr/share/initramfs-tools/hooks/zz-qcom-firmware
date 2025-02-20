@@ -1,0 +1,31 @@
+#!/bin/sh
+set -e
+
+PREREQS=""
+case $1 in
+    prereqs) echo "${PREREQS}"; exit 0;;
+esac
+
+. /usr/share/initramfs-tools/hook-functions
+
+# Fuck parsing kernel parameters
+QCOMSOC="qcom/msm8953"
+MODEL="asus"
+
+if [ "${QCOMSOC}" ] && [ "${MODEL}" ]; then
+    FW_LIST="${QCOMSOC}/${MODEL}/ze520kl/a506_zap.b02 \
+             ${QCOMSOC}/${MODEL}/ze520kl/a506_zap.mdt \
+             ${QCOMSOC}/${MODEL}/ze552kl/a506_zap.b02 \
+             ${QCOMSOC}/${MODEL}/ze552kl/a506_zap.mdt"
+
+    for fwfile in ${FW_LIST}; do
+        if [ -f "/lib/firmware/updates/${version?}/${fwfile}" ] ||
+           [ -f "/lib/firmware/updates/${fwfile}" ]             ||
+           [ -f "/lib/firmware/${version}/${fwfile}" ]          ||
+           [ -f "/lib/firmware/${fwfile}" ]; then
+            add_firmware "${fwfile}"
+        else
+            echo "I: Ignoring missing firmware ${fwfile}"
+        fi
+    done
+fi
