@@ -30,5 +30,6 @@ esac
 
 # Override zz-qcom-bootimg with our own version
 chmod -x /etc/kernel/postinst.d/zz-qcom-bootimg
+update-initramfs -u -v
 
 exit 0

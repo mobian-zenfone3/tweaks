@@ -9,6 +9,6 @@ Standards-Version: 4.5.0.3
 Package: mobian-asus-zenfone3-tweaks
 Architecture: all
 Version: 1.0
-Depends: initramfs-tools | linux-initramfs-tool
+Depends: initramfs-tools | linux-initramfs-tool, linux-base, alsa-ucm-conf
 Description: mobian-asus-zenfone3-tweaks
  Mobian tweaks for Asus Zenfone 3
